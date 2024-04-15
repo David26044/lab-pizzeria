@@ -78,13 +78,10 @@ public class Pedido implements Comparable<Pedido> {
             }
         }
         if (this.cercania > o.cercania) {
-            return 1;
-        }
-        if (this.cercania > o.cercania) {
-            return 1;
+            return -1;
         }
         if (this.cercania < o.cercania) {
-            return -1;
+            return 1;
         }
         return 0;
     }

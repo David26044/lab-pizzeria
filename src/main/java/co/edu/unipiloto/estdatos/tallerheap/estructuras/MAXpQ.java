@@ -3,6 +3,8 @@
  */
 package co.edu.unipiloto.estdatos.tallerheap.estructuras;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ACER
@@ -103,6 +105,14 @@ public class MAXpQ<Key extends Comparable<Key>> implements IHeap<Key> {
         siftDown(1); //como el que estaba de último paso a ser primero, hay que bajarlo a la posicion correspondiente
         return temp;
     }
+    
+    public ArrayList<Key> arraylist() {
+    ArrayList<Key> array = new ArrayList<>();
+    for (int i = 1; i <= size; i++) { // Empieza en 1 porque la posición 0 no se usa en el heap
+        array.add(queue[i]);
+    }
+    return array;
+}
 
     @Override
     public boolean isEmpty() {

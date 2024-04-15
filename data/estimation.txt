@@ -1,0 +1,81 @@
+1. Agregar elemento (método add(Key v) y siftUp(int ind)):
+
+		add(Key v): Esta función añade un elemento al final del arreglo que representa el heap y luego ajusta su posición mediante siftUp.
+	
+		siftUp(int ind): Esta función ajusta la posición de un elemento para mantener la propiedad de heap máximo, subiéndolo a través del árbol hasta que su padre no sea menor que 		él. 	Como la altura del heap es log n, (donde n es el número de elementos en el heap), en el peor caso se hacen log n comparaciones e intercambios.
+
+	Complejidad de tiempo: 
+	O(logn). El método se llama una vez por inserción, y cada llamada implica subir a lo más por la altura del árbol.
+
+2. Obtener el máximo (método peek()):
+
+		peek(): Simplemente retorna el elemento en la posición 1 del arreglo, que es el elemento máximo en un heap máximo.
+
+	Complejidad de tiempo: 
+	O(1). Acceder al primer elemento de un arreglo es una operación constante.
+
+3. Eliminar el máximo (método poll() y siftDown(int k)):
+
+		poll(): Este método elimina el elemento en la posición 1 (el máximo), lo reemplaza con el último elemento en el heap y luego ajusta su posición usando siftDown para 			mantener la 	propiedad de heap máximo.
+
+		siftDown(int k): Esta función ajusta la posición del elemento en la raíz del árbol para mantener la propiedad de heap, bajándolo en el árbol hasta que ninguno de sus hijos 		sea 	mayor 	que él. El número máximo de niveles por los que puede bajar es log n.
+
+	Complejidad de tiempo: 
+	O(logn). Al igual que siftUp, cada llamada a siftDown implica descender a lo más por la altura del árbol.
+
+4. Mover el último elemento arriba en el árbol (siftUp(int ind)):
+
+	Ya analizado en el punto 1.
+	Complejidad de tiempo:
+	O(logn).
+
+5. Mover la raíz abajo en el árbol (siftDown(int k)):
+
+	Ya analizado en el punto 3.
+	Complejidad de tiempo: 
+	O(logn).
+
+
+
+Funcionamiento del Comparador en Pedido:
+
+	La lógica de comparación en el método compareTo(Pedido o) determina el orden en el heap. Aquí está la lógica:
+
+		Comparación Primaria por precio:
+
+			Si el pedido no está marcado para despachar (!despachar), la comparación se hace primariamente por el precio del pedido:
+			Si el precio del pedido actual (this.precio) es mayor que el precio del otro pedido (o.precio), se devuelve 1, lo que implica que este pedido debe subir en el heap 			(ser más prioritario).
+			Si es menor, se devuelve -1, indicando que debe bajar en el heap.
+			Si los precios son iguales, devuelve 0.
+
+		Comparación Secundaria por cercania:
+	
+			Si el pedido está marcado para despachar, la comparación se hace por cercanía:
+			Una menor cercania devuelve 1, lo que indica que el pedido debería ser más prioritario en el heap.
+			Una mayor cercania devuelve -1, indicando que el pedido es menos prioritario.
+
+
+	Análisis de Complejidad con la Implementación de Pedido:
+
+		Dado que los pedidos se comparan primero por precio y luego por cercanía, en caso de empate o si están marcados para despachar, el ordenamiento en el heap tiene las 			siguientes características y complejidades:
+
+
+			Agregar pedidos ('agregarPedido'):
+
+				Complejidad: O(log n)
+				Cada nuevo pedido se inserta en el heap colaRecibidos y se reajusta para mantener el orden de máximo heap basado en la comparación definida. La inserción 				típicamente requiere una comparación y posiblemente un intercambio con su padre hasta que se encuentra en la posición correcta, todo lo cual depende del 				logaritmo del número de elementos en el heap.
+
+
+			Atender pedidos ('atenderPedido'):
+
+				Complejidad: O(log n)
+				Se extrae el elemento de la cima del heap de pedidosRecibidos (el pedido más prioritario según el precio), y luego se realiza un reajuste del heap para 				mantener el orden, lo cual implica mover el elemento en la última posición a la cima y "hundirlo" hasta su posición correcta. Luego de esto, se cambia el 				valor de la variable 'despachar' y agrega el elemento al heap de despachos. 
+
+
+			Despachar pedidos ('despacharPedido'):
+
+				Complejidad: O(log n)
+				Se extrae el pedido más prioritario del heap colaDespachar, que seguiría la misma lógica de comparación, lo que implica mover el elemento en la última 					posición a la cima y "hundirlo" hasta su posición correcta.
+
+
+
